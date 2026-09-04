@@ -20,8 +20,8 @@ class Paper(Base):
     arxiv_id: Mapped[str] = mapped_column(String(50), unique=True, index=True)
     title: Mapped[str] = mapped_column(Text)
     abstract: Mapped[str] = mapped_column(Text)
-    authors: Mapped[str] = mapped_column(Text)  # comma-separated for now
-    categories: Mapped[str] = mapped_column(String(200))  # comma-separated arXiv categories
+    # comma-separated arXiv categories
+    categories: Mapped[str] = mapped_column(String(200))
     pdf_url: Mapped[str] = mapped_column(Text)
 
     # Parsed content (filled in after Docling parsing)

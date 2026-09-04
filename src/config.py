@@ -6,6 +6,22 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     """Application runtime settings loaded from environment and .env file."""
+        # arXiv Settings
+    arxiv_categories: str = Field(
+        default="cs.AI,cs.LG,cs.CL",
+        description="Comma-separated arXiv categories to fetch",
+    )
+    arxiv_max_results: int = Field(
+        default=50, description="Max papers to fetch per ingestion run"
+    )
+    arxiv_request_delay_seconds: float = Field(
+        default=3.0, description="Delay between arXiv API requests (politeness policy)"
+    )
+
+    @property
+    def arxiv_categories_list(self) -> list[str]:
+        """Parse comma-separated categories into a list."""
+        return [c.strip() for c in self.arxiv_categories.split(",") if c.strip()]
 
     model_config = SettingsConfigDict(
         env_file=".env",

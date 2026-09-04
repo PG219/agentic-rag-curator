@@ -32,3 +32,13 @@ select = ["E", "F", "I"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
+
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic-settings>=2.6.0",
+    "sqlalchemy>=2.0.35",
+    "alembic>=1.13.3",
+    "psycopg2-binary>=2.9.9",
+]
+

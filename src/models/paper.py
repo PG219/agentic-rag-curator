@@ -20,7 +20,7 @@ class Paper(Base):
     arxiv_id: Mapped[str] = mapped_column(String(50), unique=True, index=True)
     title: Mapped[str] = mapped_column(Text)
     abstract: Mapped[str] = mapped_column(Text)
-    # comma-separated arXiv categories
+    authors: Mapped[str] = mapped_column(Text)
     categories: Mapped[str] = mapped_column(String(200))
     pdf_url: Mapped[str] = mapped_column(Text)
 

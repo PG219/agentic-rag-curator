@@ -51,7 +51,7 @@ class ArxivClient:
             "sortOrder": "descending",
             "max_results": max_results or self._settings.arxiv_max_results,
         }
-        headers = {"User-Agent": "agentic-rag-curator/0.1 (research assistant project)"}
+        headers = {"User-Agent": "agentic-rag-curator/0.1 (research assistant project)", "Accept": "application/atom+xml"}
 
         async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
             response = await client.get(ARXIV_API_BASE, params=params, headers=headers)

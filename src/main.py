@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
-
+from src.routers.ingestion import router as ingestion_router
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -39,7 +39,7 @@ app.add_middleware(
 
 # Register routers
 app.include_router(health_router)
-
+app.include_router(ingestion_router)
 
 @app.get("/", summary="Root endpoint")
 async def root() -> dict[str, str]:

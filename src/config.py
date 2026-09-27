@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     arxiv_request_delay_seconds: float = Field(
         default=3.0, description="Delay between arXiv API requests (politeness policy)"
     )
+    jina_api_key: str = Field(default="", description="Jina AI API key for embeddings")
+    jina_embedding_model: str = Field(
+        default="jina-embeddings-v3", description="Jina embedding model name"
+    )
+    jina_embedding_dimensions: int = Field(
+        default=1024, description="Embedding vector dimensionality"
+    )
 
     @property
     def arxiv_categories_list(self) -> list[str]:

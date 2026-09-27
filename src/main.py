@@ -4,7 +4,7 @@ from src.routers.ingestion import router as ingestion_router
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from src.routers.search import router as search_router
 from src.config import get_settings
 from src.routers.health import router as health_router
 
@@ -40,6 +40,7 @@ app.add_middleware(
 # Register routers
 app.include_router(health_router)
 app.include_router(ingestion_router)
+app.include_router(search_router)
 
 @app.get("/", summary="Root endpoint")
 async def root() -> dict[str, str]:

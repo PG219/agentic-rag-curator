@@ -61,6 +61,9 @@ class Settings(BaseSettings):
     opensearch_verify_certs: bool = Field(
         default=False, description="Verify OpenSearch SSL certificates"
     )
+    opensearch_papers_index: str = Field(
+        default="papers", description="OpenSearch index name for papers"
+    )
 
     @property
     def postgres_dsn(self) -> str:

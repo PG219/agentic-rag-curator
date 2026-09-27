@@ -20,6 +20,7 @@ dependencies = [
     "feedparser>=6.0.11",
     "pymupdf4llm>=0.0.17",
     "opensearch-py>=2.7.1",
+    "langchain-text-splitters>=0.3.0",
 ]
 
 [project.optional-dependencies]

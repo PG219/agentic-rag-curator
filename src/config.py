@@ -72,6 +72,14 @@ class Settings(BaseSettings):
         default="papers", description="OpenSearch index name for papers"
     )
 
+    opensearch_chunks_index: str = Field(
+        default="paper_chunks", description="OpenSearch index name for paper chunks"
+    )
+
+    opensearch_chunks_index: str = Field(
+        default="paper_chunks", description="OpenSearch index name for paper chunks"
+    )
+
     @property
     def postgres_dsn(self) -> str:
         """Construct PostgreSQL connection string."""

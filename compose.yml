@@ -17,6 +17,7 @@ services:
       timeout: 5s
       retries: 5
 
+
   opensearch:
     image: opensearchproject/opensearch:2.18.0
     container_name: rag-opensearch
@@ -143,3 +144,4 @@ volumes:
     driver: local
   airflow_logs:
     driver: local
+

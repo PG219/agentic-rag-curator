@@ -25,6 +25,16 @@ class Settings(BaseSettings):
         default=1024, description="Embedding vector dimensionality"
     )
 
+    # LLM Settings (OpenAI-compatible endpoint: Gemini / Groq / Ollama)
+    llm_base_url: str = Field(
+        default="https://generativelanguage.googleapis.com/v1beta/openai/",
+        description="Base URL of the OpenAI-compatible LLM API",
+    )
+    llm_api_key: str = Field(default="", description="API key for the LLM provider")
+    llm_model: str = Field(
+        default="gemini-flash-latest", description="LLM model name"
+    )
+
     @property
     def arxiv_categories_list(self) -> list[str]:
         """Parse comma-separated categories into a list."""

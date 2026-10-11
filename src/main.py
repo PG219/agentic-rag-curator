@@ -8,6 +8,8 @@ from src.routers.search import router as search_router
 from src.config import get_settings
 from src.routers.health import router as health_router
 
+from src.routers.ask import router as ask_router
+
 settings = get_settings()
 
 
@@ -41,6 +43,7 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(ingestion_router)
 app.include_router(search_router)
+app.include_router(ask_router)
 
 @app.get("/", summary="Root endpoint")
 async def root() -> dict[str, str]:

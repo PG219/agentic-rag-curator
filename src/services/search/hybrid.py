@@ -64,3 +64,48 @@ class HybridSearchService:
             }
             for arxiv_id, score in top_results
         ]
+
+
+    async def retrieve_context(
+        self, query: str, category: str | None = None, n: int = 5, candidates: int = 50
+    ) -> list[dict]:
+        """Hybrid-retrieve the top n papers, with chunk text for the LLM prompt."""
+        from src.config import get_settings
+
+        bm25_results = self._search_service.search(query, category=category, size=candidates)
+        query_embedding = (
+            await self._embeddings_client.embed_texts([query], task="retrieval.query")
+        )[0]
+        vector_results = self._search_service.vector_search(
+            query_embedding, category=category, size=candidates
+        )
+
+        fused = reciprocal_rank_fusion(
+            [dedupe_ids(bm25_results), dedupe_ids(vector_results)], k=self._rrf_k
+        )[:n]
+        if not fused:
+            return []
+
+        # best-ranked chunk per paper (vector_results are ordered best-first)
+        best_chunk: dict[str, str] = {}
+        for r in vector_results:
+            if r.get("text"):
+                best_chunk.setdefault(r["arxiv_id"], r["text"])
+
+        # title + abstract (fallback text) from the papers index, doc id = arxiv_id
+        docs = self._os_client.mget(
+            index=get_settings().opensearch_papers_index,
+            body={"docs": [{"_id": aid, "_source": ["title", "abstract"]} for aid, _ in fused]},
+        )
+        meta = {d["_id"]: d["_source"] for d in docs["docs"] if d.get("found")}
+
+        context = []
+        for aid, score in fused:
+            m = meta.get(aid, {})
+            text = best_chunk.get(aid) or m.get("abstract", "")
+            if text:
+                context.append(
+                    {"arxiv_id": aid, "title": m.get("title", ""), "text": text, "rrf_score": score}
+                )
+        return context
+    

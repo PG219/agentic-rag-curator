@@ -34,6 +34,14 @@ class Settings(BaseSettings):
     llm_model: str = Field(
         default="gemini-flash-latest", description="LLM model name"
     )
+    groq_base_url: str = Field(
+        default="https://api.groq.com/openai/v1",
+        description="Fallback Groq OpenAI-compatible API base URL",
+    )
+    groq_api_key: str = Field(default="", description="Fallback Groq API key")
+    groq_model: str = Field(
+        default="llama-3.3-70b-versatile", description="Fallback Groq model name"
+    )
 
     @property
     def arxiv_categories_list(self) -> list[str]:

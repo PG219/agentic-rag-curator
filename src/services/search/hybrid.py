@@ -102,7 +102,9 @@ class HybridSearchService:
         context = []
         for aid, score in fused:
             m = meta.get(aid, {})
-            text = best_chunk.get(aid) or m.get("abstract", "")
+            abstract = m.get("abstract", "")
+            chunk = best_chunk.get(aid, "")
+            text = f"Abstract: {abstract}\n\nExcerpt: {chunk}" if chunk else abstract
             if text:
                 context.append(
                     {"arxiv_id": aid, "title": m.get("title", ""), "text": text, "rrf_score": score}

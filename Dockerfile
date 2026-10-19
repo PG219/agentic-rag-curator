@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM python:3.13-slim
 
 WORKDIR /app
@@ -13,7 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install python package manager dependencies
 COPY pyproject.toml README.md ./
-RUN pip install --no-cache-dir .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --default-timeout=300 --retries 20 .
 
 # Copy application source
 COPY src/ ./src/

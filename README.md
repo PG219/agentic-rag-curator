@@ -231,4 +231,8 @@ Based on the structure of the **arXiv Paper Curator** course by [Jam with AI](ht
 
 ## License
 
+<<<<<<< HEAD
 MIT. See [LICENSE](LICENSE).
+=======
+MIT. See [LICENSE](LICENSE).
+>>>>>>> c8a63f0 (Add Langfuse tracing, pin dependencies)

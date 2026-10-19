@@ -17,6 +17,22 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:7-alpine
+    container_name: rag-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      
+
 
   opensearch:
     image: opensearchproject/opensearch:2.18.0
@@ -49,6 +65,9 @@ services:
       POSTGRES_PORT: 5432
       OPENSEARCH_HOST: opensearch
       OPENSEARCH_PORT: 9200
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY}
+      LANGFUSE_BASE_URL: ${LANGFUSE_BASE_URL}
     ports:
       - "8000:8000"
 
@@ -143,5 +162,7 @@ volumes:
   airflow_postgres_data:
     driver: local
   airflow_logs:
+    driver: local
+  redis_data:
     driver: local
 

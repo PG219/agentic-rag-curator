@@ -1,7 +1,4 @@
-import json
-
 from fastapi import APIRouter, Depends, HTTPException, Query
-from fastapi.responses import StreamingResponse
 
 from src.config import Settings, get_settings
 from src.services.embeddings.jina_client import JinaEmbeddingsClient
@@ -10,7 +7,7 @@ from src.services.opensearch.client import get_opensearch_client
 from src.services.opensearch.search import SearchService
 from src.services.rag import RAGService
 from src.services.search.hybrid import HybridSearchService
-
+import json
 router = APIRouter(prefix="/api/v1", tags=["rag"])
 
 

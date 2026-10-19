@@ -7,7 +7,7 @@ SYSTEM_PROMPT = (
     "If the context does not explicitly state the answer, reply only with: "
     "\"I could not find this in the retrieved papers.\" and nothing else. "
     "Cite sources inline using the number of the context block in square brackets, "
-    "like [1] or [2]. Be concise."
+    "like [1] or [2]. Be concise. Never use any other citation format. "
 )
 
 

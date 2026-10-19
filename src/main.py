@@ -9,16 +9,18 @@ from src.config import get_settings
 from src.routers.health import router as health_router
 
 from src.routers.ask import router as ask_router
-
+from langfuse import get_client
+    
 settings = get_settings()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Handle application startup and shutdown lifecycle events."""
-    # Startup actions (e.g. database connections, index verification) can be added here
+    
     yield
-    # Cleanup / shutdown actions can be added here
+    get_client().flush()
+    
 
 
 app = FastAPI(

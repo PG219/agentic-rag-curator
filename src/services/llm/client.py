@@ -41,6 +41,7 @@ class LLMClient:
             )
         self.max_retries = max_retries
         self.timeout = timeout
+        self.last_provider: _Provider | None = None
 
         if not self.providers:
             raise LLMError("No LLM providers are configured")
@@ -50,9 +51,11 @@ class LLMClient:
         errors: list[str] = []
         for provider in self.providers:
             try:
-                return await self._generate_with_provider(
+                result = await self._generate_with_provider(
                     provider, messages, temperature
                 )
+                self.last_provider = provider
+                return result
             except LLMError as exc:
                 errors.append(f"{provider.name}: {exc}")
                 if not exc.retryable:
@@ -116,6 +119,7 @@ class LLMClient:
         errors: list[str] = []
         for provider in self.providers:
             yielded = False
+            self.last_provider = provider
             try:
                 async for piece in self._stream_with_provider(
                     provider, messages, temperature

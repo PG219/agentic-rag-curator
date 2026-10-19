@@ -93,6 +93,12 @@ class Settings(BaseSettings):
     opensearch_chunks_index: str = Field(
         default="paper_chunks", description="OpenSearch index name for paper chunks"
     )
+        # Redis Settings
+    redis_host: str = Field(default="localhost", description="Redis host")
+    redis_port: int = Field(default=6379, description="Redis port")
+    redis_ttl_seconds: int = Field(
+        default=3600, description="How long cached answers live (seconds)"
+    )
 
 
     @property

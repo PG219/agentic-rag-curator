@@ -5,7 +5,7 @@ from langfuse import get_client
 from src.services.llm.client import LLMClient
 from src.services.llm.prompts import build_messages
 from src.services.search.hybrid import HybridSearchService
-
+from src.services.cache import cache_service, make_cache_key
 
 def cited_sources(answer: str, context: list[dict]) -> list[dict]:
     """Map [1], [2] style citations in the answer back to papers."""
@@ -13,7 +13,7 @@ def cited_sources(answer: str, context: list[dict]) -> list[dict]:
         return []
     nums = {
         int(n)
-        for group in re.findall(r"\[([\d,\s]+)\]", answer)
+        for group in re.findall(r"[\[【]([\d,\s]+)[\]】]", answer)
         for n in re.findall(r"\d+", group)
     }
     all_sources = [{"arxiv_id": c["arxiv_id"], "title": c["title"]} for c in context]

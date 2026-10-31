@@ -27,12 +27,10 @@ services:
       - redis_data:/data
 
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 5s
       timeout: 30s
       retries: 5
-      
-
 
   opensearch:
     image: opensearchproject/opensearch:2.18.0
@@ -69,7 +67,7 @@ services:
       LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY}
       LANGFUSE_BASE_URL: ${LANGFUSE_BASE_URL}
     ports:
-      - "8000:8000"
+      - "8001:8000"
 
   airflow-postgres:
     image: postgres:16-alpine
@@ -82,7 +80,7 @@ services:
     volumes:
       - airflow_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      test: [ "CMD-SHELL", "pg_isready -U airflow" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -165,4 +163,3 @@ volumes:
     driver: local
   redis_data:
     driver: local
-

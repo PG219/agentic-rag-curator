@@ -115,6 +115,10 @@ class Settings(BaseSettings):
         scheme = "https" if self.opensearch_use_ssl else "http"
         return f"{scheme}://{self.opensearch_host}:{self.opensearch_port}"
 
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+    redis_ttl_seconds: int = 86400
+
 
 @lru_cache
 def get_settings() -> Settings:
